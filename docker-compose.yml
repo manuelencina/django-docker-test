@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13.5
+    env_file: .env
+    container_name: db_postgres_container
+  web:
+    build:
+      context: .
+    env_file: .env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    container_name: django_container
+    depends_on:
+      - db
